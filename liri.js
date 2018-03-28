@@ -11,6 +11,7 @@ var twitterKey = new Twitter({
 
 // * `my-tweets`
 if (userInput === 'my-tweets') {
+  
   var params = { screen_name: 'therock' };
   twitterKey.get('statuses/user_timeline', params, function (error, tweets, response) {
     if (error) {
@@ -47,5 +48,22 @@ if (userInput === 'spotify-this-song'){
   })
 }
 // * `movie-this`
+if (userInput === 'movie-this'){
+var request = require('request');
+var userMovieInput = process.argv[3]
+request('https://www.omdbapi.com/?t=' + userMovieInput + '&y=&plot=short&apikey=trilogy', function (e, response, body) {
+  if (e) {
+    return console.log('Error occurred: ' + e);
+  }
+  console.log('Title: ' + JSON.parse(body).Title + '\n-----------------');
+  console.log('Year the movie came out: ' + JSON.parse(body).Year + '\n-----------------');
+  console.log('IMBD Rating of the movie: ' + JSON.parse(body).imdbRating + '\n-----------------');
+  console.log('Rotten Tomatoes Rating of the movie: ' + JSON.parse(body).Ratings[1].Value + '\n-----------------');
+  console.log('Country where the movie was produced: ' + JSON.parse(body).Country + '\n-----------------');
+  console.log('Language of the movie: ' + JSON.parse(body).Language + '\n-----------------');
+  console.log('Plot of the movie: ' + JSON.parse(body).Plot + '\n-----------------');
+  console.log('Actors in the movie: ' + JSON.parse(body).Actors + '\n-----------------');
+})
+}
 
 // * `do-what-it-says`
